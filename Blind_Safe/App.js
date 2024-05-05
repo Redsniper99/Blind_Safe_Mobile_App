@@ -11,6 +11,7 @@ import HomePage from './screens/HomeScreen';
 import MedicineDetector from './screens/MedicineDetector';
 import InjuryScreen from './screens/injuryScreen';
 import IdentifiedMedicine from './screens/IdentifiedMedicine';
+import PublicTransportNavigation from './screens/PublicTransportNavigation';
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,7 @@ export default function App() {
           <Stack.Screen name="MedicineDetector" component={MedicineDetector} />
           <Stack.Screen name="InjuryDetector" component={InjuryScreen} />
           <Stack.Screen name="IdentifiedMedicine" component={IdentifiedMedicine} />
+          <Stack.Screen name="PublicTransport" component={PublicTransportNavigation} />
 
         </Stack.Navigator>
         <StatusBar style="auto" />
