@@ -69,7 +69,7 @@ const MenuScreen = () => {
       navigation.navigate('InjuryDetector');
     }
     if (direction === 'left') {
-      navigation.navigate('');
+      navigation.navigate('PublicTransport');
     }
     if (direction === 'right') {
       navigation.navigate('MedicineDetector');
