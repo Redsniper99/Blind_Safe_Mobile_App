@@ -88,7 +88,7 @@ export default function InjuryDetector(props) {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Text style={styles.heading}>Medicine Detection</Text>
+      <Text style={styles.heading}>Wound Detection</Text>
       {/* App logo */}
       <Image
         source={require("../assets/blindSafeLogo.png")}
