@@ -2,12 +2,10 @@ import { StatusBar } from "expo-status-bar";
 import React, { useRef, useEffect, useState } from "react";
 import { View, Image, StyleSheet, Text, Alert, TouchableOpacity } from "react-native";
 import { Camera } from "expo-camera";
-import axios from "axios";
 import * as Speech from "expo-speech";
 
 export default function MedicineDetector({ navigation }) {
   const [startCamera, setStartCamera] = useState(false);
-  const [loading, setLoading] = useState(false);
   const cameraRef = useRef(null);
 
   useEffect(() => {
@@ -30,25 +28,7 @@ export default function MedicineDetector({ navigation }) {
     }
   };
 
-  const [injuryDetected, setInjuryDetected] = useState(false);
 
-  useEffect(() => {
-    handleInjuryDetection();
-  }, []);
-
-  const handleInjuryDetection = async () => {
-    try {
-      const response = await axios.post(
-        "http://192.168.8.160:5000/injury-detection"
-      );
-      // Handle response
-      console.log(response.data);
-      setInjuryDetected(true);
-    } catch (error) {
-      // Handle error
-      console.error(error);
-    }
-  };
 
   const handleEditPress = () => {
     // Navigate to another screen when edit button is pressed
@@ -146,13 +126,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   cameraContainer: {
-    width: "90%",
-    height: "50%",
+    width: "95%",
+    height: "65%",
     borderWidth: 1,
     borderColor: "black",
-    marginBottom: 20,
+    marginBottom: 0,
     alignItems: "center",
     justifyContent: "center",
+    marginTop:40,
   },
   microphone: {
     position: "absolute",

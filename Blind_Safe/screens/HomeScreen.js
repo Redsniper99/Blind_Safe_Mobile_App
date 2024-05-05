@@ -9,7 +9,7 @@ const HomePage = ({ navigation }) => {
   }, []);
 
   const speakWelcomeMessage = () => {
-    Speech.speak('Welcome to Blind Safe. Your essential companion for the visually impaired.', {
+    Speech.speak('Welcome to Blind Safe, your essential companion for the visually impaired, offering enhanced safety and independence with innovative features.', {
       language: 'en',
       onDone: () => {
         // Set a delay of 2 seconds before navigating to the menu page
