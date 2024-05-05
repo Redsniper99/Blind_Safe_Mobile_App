@@ -14,7 +14,7 @@ import axios from "axios";
 import * as Speech from "expo-speech";
 import { State, TapGestureHandler } from "react-native-gesture-handler";
 
-export default function InjuryDetector(props) {
+export default function InjuryDetector({ navigation }) {
   const [startCamera, setStartCamera] = useState(false);
   const cameraRef = useRef(null);
   const [tapCount, setTapCount] = useState(0);
