@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "Blind_Safe",
+    "slug": "Blind_Safe",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/blindSafeLogo2.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/blindSafeLogo2.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/blindSafeLogo2.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "permissions": [
+      "INTERNET",
+      "CAMERA",
+      "AUDIO_RECORDING",
+      "ACCESS_FINE_LOCATION"
+    ]
+    
+    
+  }
+}

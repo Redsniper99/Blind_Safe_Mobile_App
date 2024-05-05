@@ -1,2 +1,6 @@
-# Blind_Safe_Mobile_App
- 
+# Blind_Safe-mobile-application-for-vishual-impaired
+Main functions
+ * Medicine detection 
+ * Fall Detector
+ * Navigation 
+ * Wound Detector
