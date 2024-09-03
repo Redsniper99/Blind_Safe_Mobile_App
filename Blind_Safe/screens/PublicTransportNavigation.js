@@ -16,6 +16,9 @@ import Voice from "@react-native-voice/voice";
 import * as Speech from "expo-speech";
 import {GOOGLE_API_KEY} from "../utils/environments";
 import MapViewDirections from "react-native-maps-directions";
+import { Accelerometer } from 'expo-sensors';
+import MapViewComponent from "../components/MapViewComponent";
+import CameraViewComponent from "../components/CameraViewComponent";
 
 const PublicTransportNavigation = () => {
     const [stage, setStage] = useState(0);
@@ -27,6 +30,12 @@ const PublicTransportNavigation = () => {
     const [searchedLocation, setSearchedLocation] = useState(null);
 
     const micAnimation = new Animated.Value(1);
+
+    useEffect(() => {
+        console.log("Destination: ", destination);
+        console.log("Transport Method: ", transportMethod);
+    },[destination, transportMethod, searchedLocation]);
+
 
     const playVoice = () => {
         let introMessage = "You are now in Public Transport Navigation Page."
@@ -42,7 +51,6 @@ const PublicTransportNavigation = () => {
         const triggerAnimation = () => {
             animateMic();
         };
-
         // Start the microphone animation
         triggerAnimation();
 
@@ -105,11 +113,12 @@ const PublicTransportNavigation = () => {
     };
 
     const onSpeechResults = (event) => {
-        const result = event.value[0];
+        let result = event.value[0];
         if (stage === 0) {
             setDestination(result);
             setStage(1);
         } else if (stage === 1) {
+            result = result.toUpperCase();
             setTransportMethod(result);
             setStage(2);
         }
@@ -121,8 +130,14 @@ const PublicTransportNavigation = () => {
         if (stage === 0) {
             setDestination(text);
         } else if (stage === 1) {
+            text = text.toUpperCase();
             setTransportMethod(text);
         }
+    };
+
+    const handleTripleTap = () => {
+        Vibration.vibrate(100);
+        setStage(prevStage => (prevStage === 2 ? 3 : 2)); // Toggle between stage 2 and 3
     };
 
     const handleSubmit = () => {
@@ -145,7 +160,6 @@ const PublicTransportNavigation = () => {
                 )}
                 {waitingForInput && <ActivityIndicator size="large" color="#0000ff"/>}
                 {stage === 0 && (
-
                     <View style={styles.stageContainer}>
                         <Text style={styles.question}>Where do you want to go?</Text>
                         <GooglePlacesAutocomplete
@@ -220,82 +234,19 @@ const PublicTransportNavigation = () => {
                     </View>
                 )}
                 {stage === 2 && (
-                    <>
-                        <Image
-                            source={require("../assets/blindSafeLogo.png")}
-                            style={styles.appHeader}
-                        />
-                        <MapView
-                            provider={PROVIDER_GOOGLE}
-                            style={styles.map}
-                            location={location}
-                            region={{
-                                latitude: location?.latitude,
-                                longitude: location?.longitude,
-                                latitudeDelta: 0.0422,
-                                longitudeDelta: 0.0421,
-                            }}
-                            initialRegion={{
-                                latitude: location?.latitude,
-                                longitude: location?.longitude,
-                                latitudeDelta: 0.0422,
-                                longitudeDelta: 0.0421,
-                            }}
-                            customMapStyle={MapViewStyle}
-                        >
-                            <Marker
-                                coordinate={{
-                                    latitude: location?.latitude,
-                                    longitude: location?.longitude,
-                                }}
-                            >
-                                <Image
-                                    source={require("../assets/user.png")}
-                                    style={{width: 40, height: 40}}
-                                />
-                            </Marker>
-
-                            {searchedLocation && (
-                                <Marker
-                                    coordinate={{
-                                        latitude: searchedLocation.latitude,
-                                        longitude: searchedLocation.longitude,
-                                    }}
-                                />
-                            )}
-                            {coordinates.length > 0 && (
-                                <Polyline
-                                    coordinates={coordinates}
-                                    strokeColor="#000"
-                                    strokeWidth={6}
-                                />
-                            )}
-                            <MapViewDirections
-                                origin={location}
-                                destination={searchedLocation}
-                                apikey={GOOGLE_API_KEY}
-                                strokeWidth={4}
-                                strokeColor="pink"
-                                mode="transit"
-                                transitOptions={{
-                                    modes: ["TRANSIT","WALKING"],
-                                    routingPreference: 'fewer_transfers',
-                                    departureTime: new Date(Date.now()),
-                                }}
-                            />
-
-                        </MapView>
-                        <View style={styles.infoContainer}>
-                            <View style={styles.infoRow}>
-                                <Text style={styles.infoLabel}>Destination: </Text>
-                                <Text style={styles.infoText}>{destination}</Text>
-                            </View>
-                            <View style={styles.infoRow}>
-                                <Text style={styles.infoLabel}>Transport Method: </Text>
-                                <Text style={styles.infoText}>{transportMethod}</Text>
-                            </View>
-                        </View>
-                    </>
+                    <MapViewComponent
+                        location={location}
+                        destination={destination}
+                        transportMethod={transportMethod}
+                        searchedLocation={searchedLocation}
+                        coordinates={coordinates}
+                        handleTripleTap={handleTripleTap}
+                    />
+                )}
+                {stage === 3 && (
+                    <CameraViewComponent
+                        handleTripleTap={handleTripleTap}
+                    />
                 )}
             </View>
         </TouchableWithoutFeedback>
