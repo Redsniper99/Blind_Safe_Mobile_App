@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Camera } from 'expo-camera';
 
-const CameraViewComponent = ({handleTripleTap}) => {
+const CameraViewComponent = ({ handleTripleTap }) => {
     const [hasPermission, setHasPermission] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
     const [isCameraReady, setIsCameraReady] = useState(false);
@@ -27,6 +27,10 @@ const CameraViewComponent = ({handleTripleTap}) => {
 
     return (
         <View style={styles.container}>
+            <Image
+                source={require("../assets/blindSafeLogo.png")}
+                style={styles.appLogo}
+            />
             <Camera
                 style={styles.camera}
                 type={type}
@@ -43,7 +47,7 @@ const CameraViewComponent = ({handleTripleTap}) => {
                             );
                         }}
                     >
-                        <Text style={styles.text}> Flip Camera </Text>
+                        <Text style={styles.text}>Flip Camera</Text>
                     </TouchableOpacity>
                     {isCameraReady && (
                         <TouchableOpacity
@@ -53,18 +57,18 @@ const CameraViewComponent = ({handleTripleTap}) => {
                                 // Implement scanning or capturing functionality here
                             }}
                         >
-                            <Text style={styles.text}> Scan </Text>
+                            <Text style={styles.text}>Scan</Text>
                         </TouchableOpacity>
                     )}
                 </View>
             </Camera>
-            <View style={styles.container}>
-                <Text style={styles.text}>Obstacle Detection Running</Text>
+            <View style={styles.bottomContainer}>
+                <Text style={styles.bottomText}>Obstacle Detection Running</Text>
                 <Button
                     onPress={handleTripleTap}
                     title="Map View"
                     color="#841584"
-                    accessibilityLabel="Learn more about this purple button"
+                    accessibilityLabel="Navigate to Map View"
                 />
             </View>
         </View>
@@ -73,30 +77,51 @@ const CameraViewComponent = ({handleTripleTap}) => {
 
 const styles = StyleSheet.create({
     container: {
+        paddingHorizontal: 10,
+        paddingVertical: 20,
+        width: '100%',
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
+    appLogo: {
+        width: 200,
+        height: 50,
+        position: 'absolute',
+        top: 50,
+        alignSelf: 'center',
     },
     camera: {
         flex: 1,
+        width: '100%',
+        top: 100,
         justifyContent: 'flex-end',
     },
     buttonContainer: {
-        flex: 1,
-        backgroundColor: 'transparent',
         flexDirection: 'row',
-        margin: 20,
+        justifyContent: 'space-around',
+        backgroundColor: 'transparent',
+        marginBottom: 20,
     },
     button: {
-        flex: 0.1,
-        alignSelf: 'flex-end',
-        alignItems: 'center',
-        backgroundColor: '#fff',
         padding: 10,
-        margin: 10,
+        backgroundColor: '#ffffff',
+        borderRadius: 5,
     },
     text: {
         fontSize: 18,
         color: 'black',
+    },
+    bottomContainer: {
+        width: '100%',
+        padding: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#f0f0f0',
+    },
+    bottomText: {
+        fontSize: 20,
+        marginBottom: 10,
     },
 });
 
